@@ -13,7 +13,7 @@ pub trait UIApp: Sized {
 
     fn main(&mut self) -> c_int {
         let args = args_os().collect::<Vec<_>>();
-        let mut argv: Vec<*mut i8> = Vec::new();
+        let mut argv: Vec<*mut c_char> = Vec::new();
         for mut i in args {
             i.push("\0");
             argv.push(i.as_bytes().as_ptr() as *mut c_char);

@@ -37,9 +37,10 @@ impl From<Priority> for log_priority {
 }
 
 pub fn print(priority: Priority, tag: &str, message: &str) {
-    let tag_ptr = CString::new(tag).unwrap().as_c_str().as_ptr();
-    let message_ptr = CString::new(message).unwrap().as_c_str().as_ptr();
+    let tag = CString::new(tag).unwrap();
+    let message = CString::new(message).unwrap();
+
     unsafe {
-        dlog_print(priority.into(), tag_ptr, message_ptr);
+        dlog_print(priority.into(), tag.as_ptr(), message.as_ptr());
     }
 }

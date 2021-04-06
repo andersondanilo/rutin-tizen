@@ -1,9 +1,7 @@
-use rutin_tizen_sys::elm_object_part_content_set;
-use rutin_tizen_sys::elm_object_part_text_set;
-use rutin_tizen_sys::evas_object_size_hint_weight_set;
-use rutin_tizen_sys::EVAS_HINT_EXPAND;
-use rutin_tizen_sys::EVAS_HINT_FILL;
-use rutin_tizen_sys::{evas_free, evas_object_show, Eo};
+use rutin_tizen_sys::{
+    elm_object_part_content_set, elm_object_part_text_set, evas_free, evas_object_show,
+    evas_object_size_hint_weight_set, Eo, EVAS_HINT_EXPAND, EVAS_HINT_FILL,
+};
 use std::ffi::CString;
 
 pub enum SizeHint {
@@ -38,9 +36,9 @@ pub trait Object<'a> {
     }
 
     fn set_text(&mut self, text: &str) {
-        let text_ptr = CString::new(text).unwrap().as_c_str().as_ptr();
+        let text = CString::new(text).unwrap();
 
-        unsafe { elm_object_part_text_set(self.eo_ptr(), std::ptr::null(), text_ptr) }
+        unsafe { elm_object_part_text_set(self.eo_ptr(), std::ptr::null(), text.as_ptr()) }
     }
 
     fn set_content(&mut self, content: &mut dyn Object<'a>) {

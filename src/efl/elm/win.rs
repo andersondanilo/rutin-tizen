@@ -1,22 +1,16 @@
-use crate::efl::evas::Object;
-use rutin_tizen_sys::elm_win_autodel_get;
-use rutin_tizen_sys::elm_win_autodel_set;
-use rutin_tizen_sys::elm_win_indicator_mode_set;
-use rutin_tizen_sys::elm_win_lower;
-use rutin_tizen_sys::elm_win_resize_object_add;
-use rutin_tizen_sys::elm_win_util_standard_add;
-use rutin_tizen_sys::elm_win_wm_rotation_supported_get;
-use rutin_tizen_sys::Elm_Win_Indicator_Mode;
-use rutin_tizen_sys::Elm_Win_Indicator_Mode_ELM_WIN_INDICATOR_HIDE;
-use rutin_tizen_sys::Elm_Win_Indicator_Mode_ELM_WIN_INDICATOR_SHOW;
-use rutin_tizen_sys::Elm_Win_Indicator_Mode_ELM_WIN_INDICATOR_UNKNOWN;
-use rutin_tizen_sys::Elm_Win_Indicator_Opacity_Mode;
-use rutin_tizen_sys::Elm_Win_Indicator_Opacity_Mode_ELM_WIN_INDICATOR_BG_TRANSPARENT;
-use rutin_tizen_sys::Elm_Win_Indicator_Opacity_Mode_ELM_WIN_INDICATOR_OPACITY_UNKNOWN;
-use rutin_tizen_sys::Elm_Win_Indicator_Opacity_Mode_ELM_WIN_INDICATOR_OPAQUE;
-use rutin_tizen_sys::Elm_Win_Indicator_Opacity_Mode_ELM_WIN_INDICATOR_TRANSLUCENT;
-use rutin_tizen_sys::Elm_Win_Indicator_Opacity_Mode_ELM_WIN_INDICATOR_TRANSPARENT;
-use rutin_tizen_sys::Eo;
+use super::prelude::*;
+use rutin_tizen_sys::{
+    elm_win_autodel_get, elm_win_autodel_set, elm_win_indicator_mode_set, elm_win_lower,
+    elm_win_resize_object_add, elm_win_util_standard_add, elm_win_wm_rotation_supported_get,
+    Elm_Win_Indicator_Mode, Elm_Win_Indicator_Mode_ELM_WIN_INDICATOR_HIDE,
+    Elm_Win_Indicator_Mode_ELM_WIN_INDICATOR_SHOW,
+    Elm_Win_Indicator_Mode_ELM_WIN_INDICATOR_UNKNOWN, Elm_Win_Indicator_Opacity_Mode,
+    Elm_Win_Indicator_Opacity_Mode_ELM_WIN_INDICATOR_BG_TRANSPARENT,
+    Elm_Win_Indicator_Opacity_Mode_ELM_WIN_INDICATOR_OPACITY_UNKNOWN,
+    Elm_Win_Indicator_Opacity_Mode_ELM_WIN_INDICATOR_OPAQUE,
+    Elm_Win_Indicator_Opacity_Mode_ELM_WIN_INDICATOR_TRANSLUCENT,
+    Elm_Win_Indicator_Opacity_Mode_ELM_WIN_INDICATOR_TRANSPARENT, Eo,
+};
 use std::ffi::CString;
 
 pub enum IndicatorMode {
@@ -70,10 +64,10 @@ pub struct Win<'a> {
 
 impl<'a> Win<'a> {
     pub fn new(name: &str, title: &str) -> Option<Self> {
-        let name_ptr = CString::new(name).unwrap().as_c_str().as_ptr();
-        let title_ptr = CString::new(title).unwrap().as_c_str().as_ptr();
+        let name = CString::new(name).unwrap();
+        let title = CString::new(title).unwrap();
 
-        let win = unsafe { elm_win_util_standard_add(name_ptr, title_ptr) };
+        let win = unsafe { elm_win_util_standard_add(name.as_ptr(), title.as_ptr()) };
 
         if win.is_null() {
             None

@@ -1,6 +1,5 @@
-use crate::efl::evas::Object;
-use rutin_tizen_sys::elm_conformant_add;
-use rutin_tizen_sys::Eo;
+use super::prelude::*;
+use rutin_tizen_sys::{elm_conformant_add, Eo};
 
 pub struct Conformant<'a> {
     eo: *mut Eo,
