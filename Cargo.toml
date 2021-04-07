@@ -1,11 +1,15 @@
 [package]
 name = "rutin-tizen"
+description = "Rust safe wrapper arround rutin-tizen-sys bindings (tizen wearable)"
 version = "0.1.0"
+keywords = ["tizen", "wearable", "smartwatch", "rutin"]
 authors = ["Anderson Danilo <contact@andersondanilo.com>"]
 edition = "2018"
+license = "Apache-2.0"
+categories = ["api-bindings"]
+readme = "README.md"
+repository = "https://github.com/andersondanilo/rutin-tizen"
+homepage = "https://github.com/andersondanilo/rutin-tizen"
 
 [dependencies]
 rutin-tizen-sys = "0.1.0"
-
-[patch.crates-io]
-rutin-tizen-sys = { path = "../rutin-tizen-sys" }
