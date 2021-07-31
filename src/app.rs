@@ -1,3 +1,4 @@
+use crate::rutin::rutin_debug;
 use rutin_tizen_sys::{ui_app_lifecycle_callback_s, ui_app_main};
 use std::env::args_os;
 use std::marker::Sized;
@@ -12,6 +13,7 @@ pub trait UIApp: Sized {
     fn resume(&mut self);
 
     fn main(&mut self) -> c_int {
+        rutin_debug("rutin app started");
         let args = args_os().collect::<Vec<_>>();
         let mut argv: Vec<*mut c_char> = Vec::new();
         for mut i in args {
@@ -40,21 +42,25 @@ pub trait UIApp: Sized {
 }
 
 extern "C" fn app_create<T: UIApp>(data: *mut c_void) -> bool {
+    rutin_debug("app create");
     let app = unsafe { &mut *(data as *mut T) };
     app.create()
 }
 
 extern "C" fn app_terminate<T: UIApp>(data: *mut c_void) {
+    rutin_debug("app terminate");
     let app = unsafe { &mut *(data as *mut T) };
     app.terminate()
 }
 
 extern "C" fn app_pause<T: UIApp>(data: *mut c_void) {
+    rutin_debug("app pause");
     let app = unsafe { &mut *(data as *mut T) };
     app.pause()
 }
 
 extern "C" fn app_resume<T: UIApp>(data: *mut c_void) {
+    rutin_debug("app resume");
     let app = unsafe { &mut *(data as *mut T) };
     app.resume()
 }

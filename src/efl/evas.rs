@@ -1,3 +1,4 @@
+use crate::rutin::rutin_debug;
 use rutin_tizen_sys::{
     elm_object_part_content_set, elm_object_part_text_set, evas_free, evas_object_show,
     evas_object_size_hint_weight_set, Eo, EVAS_HINT_EXPAND, EVAS_HINT_FILL,
@@ -24,15 +25,12 @@ pub trait Object<'a> {
     fn eo_ptr(&mut self) -> *mut Eo;
 
     fn show(&mut self) {
+        rutin_debug(&format!("show evas object {:p}", self.eo_ptr()));
         unsafe { evas_object_show(self.eo_ptr()) }
     }
 
     fn set_size_hint_weight(&mut self, x: SizeHint, y: SizeHint) {
         unsafe { evas_object_size_hint_weight_set(self.eo_ptr(), x.into(), y.into()) }
-    }
-
-    fn free(&mut self) {
-        unsafe { evas_free(self.eo_ptr()) }
     }
 
     fn set_text(&mut self, text: &str) {

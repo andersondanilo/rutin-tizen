@@ -1,4 +1,5 @@
 use super::prelude::*;
+use crate::rutin::rutin_debug;
 use rutin_tizen_sys::{elm_label_add, Eo};
 
 pub struct Label<'a> {
@@ -24,11 +25,5 @@ impl<'a> Label<'a> {
 impl<'a> Object<'a> for Label<'a> {
     fn eo_ptr(&mut self) -> *mut Eo {
         self.eo
-    }
-}
-
-impl<'a> Drop for Label<'a> {
-    fn drop(&mut self) {
-        self.free()
     }
 }

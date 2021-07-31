@@ -1,4 +1,5 @@
 use super::prelude::*;
+use crate::rutin::rutin_debug;
 use rutin_tizen_sys::{elm_conformant_add, Eo};
 
 pub struct Conformant<'a> {
@@ -24,11 +25,5 @@ impl<'a> Conformant<'a> {
 impl<'a> Object<'a> for Conformant<'a> {
     fn eo_ptr(&mut self) -> *mut Eo {
         self.eo
-    }
-}
-
-impl<'a> Drop for Conformant<'a> {
-    fn drop(&mut self) {
-        self.free()
     }
 }

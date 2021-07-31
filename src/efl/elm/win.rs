@@ -1,8 +1,9 @@
 use super::prelude::*;
+use crate::rutin::rutin_debug;
 use rutin_tizen_sys::{
     elm_win_autodel_get, elm_win_autodel_set, elm_win_indicator_mode_set, elm_win_lower,
     elm_win_resize_object_add, elm_win_util_standard_add, elm_win_wm_rotation_supported_get,
-    Elm_Win_Indicator_Mode, Elm_Win_Indicator_Mode_ELM_WIN_INDICATOR_HIDE,
+    evas_free, Elm_Win_Indicator_Mode, Elm_Win_Indicator_Mode_ELM_WIN_INDICATOR_HIDE,
     Elm_Win_Indicator_Mode_ELM_WIN_INDICATOR_SHOW,
     Elm_Win_Indicator_Mode_ELM_WIN_INDICATOR_UNKNOWN, Elm_Win_Indicator_Opacity_Mode,
     Elm_Win_Indicator_Opacity_Mode_ELM_WIN_INDICATOR_BG_TRANSPARENT,
@@ -69,6 +70,8 @@ impl<'a> Win<'a> {
 
         let win = unsafe { elm_win_util_standard_add(name.as_ptr(), title.as_ptr()) };
 
+        rutin_debug(&format!("win created pointer: {:p}", win));
+
         if win.is_null() {
             None
         } else {
@@ -113,11 +116,5 @@ impl<'a> Win<'a> {
 impl<'a> Object<'a> for Win<'a> {
     fn eo_ptr(&mut self) -> *mut Eo {
         self.eo
-    }
-}
-
-impl<'a> Drop for Win<'a> {
-    fn drop(&mut self) {
-        self.free()
     }
 }
